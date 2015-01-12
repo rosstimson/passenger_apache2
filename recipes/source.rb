@@ -22,7 +22,11 @@ case node['platform_family']
 when "arch"
   package "apache"
 when "rhel"
-  package "httpd24-devel"
+  if node['apache']['version'] == '2.4'
+    package "httpd24-devel"
+  else
+    package "httpd-devel"
+  end
   if node['platform_version'].to_f < 6.0
     package 'curl-devel'
   else
